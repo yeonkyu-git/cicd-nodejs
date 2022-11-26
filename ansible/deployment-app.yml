@@ -1,0 +1,20 @@
+---
+- name: Deploy application on the Kubernetes
+  hosts: kubernetes
+  gather_facts: no  
+
+  tasks:
+  - name: Delete exist Service
+    command: kubectl delete svc cicd-node-service
+    ignore_errors: yes
+
+  - name: Delete exist Deployment
+    command: kubectl delete deploy cicd-node-deployment
+    ignore_errors: yes
+
+  - name: create new Deployment
+    command: kubectl create -f /root/nodeCICD/kubernetes/deployment.yml
+  
+  - name: create new Service
+    command: kubectl create -f /root/nodeCICD/kubernetes/service.yml
+  

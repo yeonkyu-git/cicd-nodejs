@@ -1,0 +1,16 @@
+---
+- name: Create Docker Images and Push to the DockerHub
+  hosts: ansiblehost
+  gather_facts: no
+
+  tasks:
+  - name: Create Docker images
+    command: docker build . -t dusrbpoiiij/cicd-node:latest
+    args:
+      chdir: /root/nodeCICD/app
+  
+  - name: Push Docker images
+    command: docker push dusrbpoiiij/cicd-node:latest
+  
+  - name: Delete Docker images
+    command: docker rmi dusrbpoiiij/cicd-node:latest
